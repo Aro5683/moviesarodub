@@ -26,25 +26,32 @@
   }
 
   .site-header {
-    background: transparent;
-    padding: 1.2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid #00c6ff;
-    width: 100%;
-    max-width: 800px;
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.2rem;
+  border-bottom: 2px solid #00c6ff;
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 30px;
+  gap: 10px;
+}
 
-  .site-header h1 {
-    font-size: 2rem;
-    color: #ffffffcc;
-    border-left: 4px solid #00c6ff;
-    padding-left: 12px;
-  }
+.site-header h1 {
+  font-size: 2rem;
+  color: #ffffffcc;
+  border-left: 4px solid #00c6ff;
+  padding-left: 12px;
+  margin: 0;
+  flex: 1;
+  word-break: break-word;
+  white-space: normal; /* allow wrap */
+}
+
+.telegram-center-wrapper {
+  flex-shrink: 0; /* prevent shrinking */
+}
+
 
   #backButton {
     background-color: #00c6ff;

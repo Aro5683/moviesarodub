@@ -262,29 +262,33 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 100px;
-  height: 100px;
-  background: rgba(0, 136, 204, 0.2);
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(0, 198, 255, 0.5) 20%, transparent 70%);
   border-radius: 50%;
   transform: translate(-50%, -50%) scale(0.8);
-  animation: pulse-wave 2s infinite;
+  animation: pulse-wave-glow 2s infinite ease-out;
+  box-shadow: 0 0 30px rgba(0, 198, 255, 0.7), 0 0 60px rgba(0, 198, 255, 0.5);
+  filter: blur(2px);
   z-index: -1;
 }
 
-@keyframes pulse-wave {
+
+@keyframes pulse-wave-glow {
   0% {
     transform: translate(-50%, -50%) scale(0.8);
-    opacity: 0.6;
+    opacity: 0.9;
   }
   50% {
-    transform: translate(-50%, -50%) scale(1.4);
-    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 0.5;
   }
   100% {
-    transform: translate(-50%, -50%) scale(2);
+    transform: translate(-50%, -50%) scale(2.2);
     opacity: 0;
   }
 }
+
 
   </style>
 </head>

@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Moviesaro-DUB</title>
+<html>
+
+
+  
+  
+
   <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     * {
-      box-sizing: border-box;
+     
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -28,7 +28,7 @@
       padding: 1.2rem;
       display: flex;
       justify-content: space-between;
-      align-items: center;
+     
       border-bottom: 2px solid #00c6ff;
       width: 100%;
       max-width: 800px;
@@ -92,15 +92,15 @@
 
     .movie-item,
     .category-item {
-      background: rgba(255, 255, 255, 0.05);
+      
       padding: 16px;
       border-radius: 8px;
-      margin-bottom: 15px;
+     
       display: flex;
       align-items: center;
       gap: 15px;
       transition: background 0.3s;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+     
     }
 
     .movie-item:hover,
@@ -109,7 +109,7 @@
     }
 
     .movie-item img {
-      width: 100px;
+
       height: 55px;
       object-fit: cover;
       border-radius: 5px;
@@ -192,7 +192,7 @@
     /* Responsive styles */
     @media (max-width: 768px) {
       .site-header {
-        flex-direction: column;
+     
         align-items: flex-start;
         gap: 10px;
       }
@@ -218,13 +218,12 @@
       .movie-item,
       .category-item {
         flex-direction: column;
-        align-items: flex-start;
+       display:block;
         text-align: left;
       }
 
       .movie-item img {
-        width: 100%;
-        height: auto;
+     
       }
 
       .pagination {
@@ -259,7 +258,7 @@
 
 .telegram-glow-btn::before {
   content: '';
-  position: absolute;
+  
   top: 50%;
   left: 50%;
   width: 120px;
@@ -291,7 +290,7 @@
 
 
   </style>
-</head>
+
 
 
 
@@ -299,11 +298,10 @@
 
   <div class="site-header">
   <h1>MoviesaroDub - தமிழ்</h1>
-
- <div class="telegram-center-wrapper">
+<div class="telegram-center-wrapper">
     <a href="https://t.me/yourTelegramGroupUsername" 
        class="telegram-glow-btn" 
-       target="_blank" 
+       target="_self" 
        rel="noopener noreferrer" 
        title="Join our Telegram group">
       <svg class="telegram-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 240 240" fill="currentColor">
@@ -312,14 +310,18 @@
       </path></circle></svg>
     </a>
   </div>
+
+ 
 </div>
 <button id="backButton" onclick="goBack()">← Back</button>
  
-
+<br/>
   <br/>
   <div id="content" class="loading" style="color:#ccc;">Loading...</div>
 
-
+<br/>
+<br/>
+<br/>
 
 
 
@@ -377,7 +379,7 @@ let fullUrl = match
             const text = a.textContent.toLowerCase();
             const href = a.getAttribute("href");
             if (text.includes("watch online") || !href) return;
-            downloadHTML += `<div><a href="${href}" target="_blank" style="color:lime" rel="noopener noreferrer">${a.textContent.replace(/isaiDub\.me/gi, "MoviesAroDub")}
+            downloadHTML += `<div><a href="${href}" target="_self" style="color:lime" rel="noopener noreferrer">${a.textContent.replace(/isaiDub\.me/gi, "MoviesAroDub")}
 </a></div>`;
           });
         }
@@ -468,6 +470,71 @@ function goBack() {
 loadPage("/tamil-yearly-dubbed-movies/");
 
   </script>
+<script>
+    // Disable right-click
+document.addEventListener("contextmenu", function (e) {
+    e.preventDefault();
+});
+
+// Disable keyboard shortcuts for DevTools
+document.addEventListener("keydown", function (e) {
+    if (e.ctrlKey && (e.key === "u" || e.key === "U" || e.key === "s" || e.key === "S" || e.key === "i" || e.key === "I" || e.key === "j" || e.key === "J" || e.key === "c" || e.key === "C")) {
+        e.preventDefault();
+    }
+});
+
+// Disable F12, Ctrl+Shift+I, Ctrl+Shift+J
+document.onkeydown = function (e) {
+    if (e.keyCode == 123) { return false; } // F12
+    if (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) { return false; } // Ctrl+Shift+I/J
+};
+  
+  </script>
+<script>
+    const blockScreen = document.getElementById('blockScreen');
+
+    function detectDevTools() {
+      const widthDiff = window.outerWidth - window.innerWidth;
+      const heightDiff = window.outerHeight - window.innerHeight;
+      const threshold = 120;
+
+      // True if dimensions indicate DevTools or if debugger gets trapped
+      let devtoolsOpen = widthDiff > threshold || heightDiff > threshold;
+
+      // Mobile-specific trap
+      const trap = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      if (trap) {
+        const start = new Date();
+        debugger;
+        const end = new Date();
+        if (end - start > 100) devtoolsOpen = true;
+      }
+
+      if (devtoolsOpen) {
+       window.location.href = "https://c.tenor.com/x4V9PRp9R-0AAAAC/tenor.gif"; // Replace with your redirect URL
+
+      } else {
+        blockScreen.style.display = 'none';
+        document.body.style.pointerEvents = 'auto';
+      }
+    }
+
+    setInterval(detectDevTools, 600);
+
+    // Block right-click
+    document.addEventListener('contextmenu', e => e.preventDefault());
+
+    // Block common dev hotkeys
+    document.addEventListener('keydown', function (event) {
+      if (
+        event.key === 'F12' ||
+        (event.ctrlKey && event.shiftKey && ['I', 'J', 'C'].includes(event.key.toUpperCase())) ||
+        (event.ctrlKey && event.key.toLowerCase() === 'u')
+      ) {
+        event.preventDefault();
+      }
+    });
+  </script>
 
 
-</!doctype>
+</html>

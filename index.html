@@ -446,9 +446,11 @@ function goBack() {
     const previous = pageHistory.pop(); // Get the one before
     loadPage(previous, true); // Load it and flag as 'back'
   } else {
-  
+    // Redirect to homepage when no history
+    window.location.href = 'https://moviesaro.netlify.app';
   }
 }
+
 
 
    // Initial load

@@ -196,6 +196,71 @@
     display: block;
     margin-top: 0;
   }
+/* Responsive tweaks for tablets and mobiles */
+@media (max-width: 768px) {
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .site-header h1 {
+    font-size: 1.5rem;
+    text-align: left;
+    width: 100%;
+  }
+
+  .telegram-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  #backButton {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px;
+    margin-top: 10px;
+  }
+
+  .movie-item,
+  .category-item {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .movie-item img {
+    width: 100%;
+    height: auto;
+  }
+
+  .pagination {
+    font-size: 0.9rem;
+    flex-wrap: wrap;
+  }
+
+  .telegram-glow-btn {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 20px 10px;
+  }
+
+  .site-header {
+    padding: 1rem;
+  }
+
+  .movie-info a {
+    font-size: 0.95rem;
+  }
+
+  .loading-text {
+    font-size: 12px;
+  }
+}
 
 </style>
 

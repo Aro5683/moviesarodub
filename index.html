@@ -1,269 +1,263 @@
-<!doctype html>
-
-
-
-  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tamil Dubbed Explorer</title>
   <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
 
- <style>
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', sans-serif;
-  }
+    body {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-  body {
-    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-    color: #fff;
-    min-height: 100vh;
-    padding: 40px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+    .site-header {
+      background: transparent;
+      padding: 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #00c6ff;
+      width: 100%;
+      max-width: 800px;
+      margin-bottom: 30px;
+    }
 
+    .site-header h1 {
+      font-size: 2rem;
+      color: #ffffffcc;
+      border-left: 4px solid #00c6ff;
+      padding-left: 12px;
+      margin-right: 10px;
+    }
 
+    #backButton {
+      background-color: #00c6ff;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      margin-top: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
 
-  #content {
-    width: 100%;
-    max-width: 800px;
-  }
+    #backButton:hover {
+      background-color: #009ecb;
+    }
 
-  .movie-item,
-  .category-item {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 16px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    transition: background 0.3s;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
+    .telegram-center-wrapper {
+      display: block;
+      margin-top: 0;
+    }
 
-  .movie-item:hover,
-  .category-item:hover {
-    background: rgba(0, 198, 255, 0.15);
-  }
+    .telegram-glow-btn {
+      display: inline-block;
+      padding: 4px;
+      border-radius: 50%;
+      transition: transform 0.3s ease, box-shadow 0.4s ease;
+      box-shadow: 0 0 10px rgba(0, 136, 204, 0.5);
+      text-decoration: none;
+      background: transparent;
+    }
 
-  .movie-item img {
-    width: 100px;
-    height: 55px;
-    object-fit: cover;
-    border-radius: 5px;
-  }
+    .telegram-glow-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px rgba(0, 136, 204, 0.9), 0 0 60px rgba(0, 136, 204, 0.7);
+    }
 
-  .movie-info {
-    flex: 1;
-  }
+    .telegram-icon {
+      width: 50px;
+      height: 50px;
+      display: block;
+      color: #fff;
+    }
 
-  .movie-info a {
-    color: #00c6ff;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1rem;
-  }
+    #content {
+      width: 100%;
+      max-width: 800px;
+    }
 
-  .movie-info a:hover {
-    text-decoration: underline;
-  }
+    .movie-item,
+    .category-item {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: background 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
 
-  .pagination {
-    margin-top: 20px;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 10px;
-    border-radius: 6px;
-    text-align: center;
-  }
+    .movie-item:hover,
+    .category-item:hover {
+      background: rgba(0, 198, 255, 0.15);
+    }
 
-  .pagination a,
-  .pagination span {
-    margin: 0 6px;
-    color: #ffcc00;
-    font-weight: bold;
-    text-decoration: none;
-  }
+    .movie-item img {
+      width: 100px;
+      height: 55px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
 
-  .pagination a:hover {
-    text-decoration: underline;
-  }
+    .movie-info {
+      flex: 1;
+    }
 
-  .pagination .pagination_current {
-    color: #fff;
-  }
+    .movie-info a {
+      color: #00c6ff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+    }
 
-  .spinner-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 0;
-}
+    .movie-info a:hover {
+      text-decoration: underline;
+    }
 
-.spinner {
-  border: 4px solid rgba(255, 255, 255, 0.2);
-  border-top: 4px solid #00c6ff;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-  margin-bottom: 10px;
-}
+    .pagination {
+      margin-top: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 10px;
+      border-radius: 6px;
+      text-align: center;
+    }
 
-.loading-text {
-  font-size: 14px;
-  color: #ccc;
-  font-style: italic;
-}
+    .pagination a,
+    .pagination span {
+      margin: 0 6px;
+      color: #ffcc00;
+      font-weight: bold;
+      text-decoration: none;
+    }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+    .pagination a:hover {
+      text-decoration: underline;
+    }
 
+    .pagination .pagination_current {
+      color: #fff;
+    }
 
-  .error {
-    color: #ff6666;
-    text-align: center;
-    padding: 20px;
-  }
-#backButton {
-  background-color: #00c6ff;
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
-  margin-top: 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 14px;
-  transition: background 0.3s;
-}
+    .spinner-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 0;
+    }
 
-#backButton:hover {
-  background-color: #009ecb;
-}
+    .spinner {
+      border: 4px solid rgba(255, 255, 255, 0.2);
+      border-top: 4px solid #00c6ff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 10px;
+    }
 
-</style>
-<!-- Styles -->
-<style>
- .site-header {
-    background: transparent;
-    padding: 1.2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid #00c6ff;
-    width: 100%;
-    max-width: 800px;
-    margin-bottom: 30px;
-  }
+    .loading-text {
+      font-size: 14px;
+      color: #ccc;
+      font-style: italic;
+    }
 
-  .site-header h1 {
-    font-size: 2rem;
-    color: #ffffffcc;
-    border-left: 4px solid #00c6ff;
-    padding-left: 12px;
-    margin-right: 10px;
-  }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
 
-  .telegram-glow-btn {
-    display: inline-block;
-    padding: 4px;
-    border-radius: 50%;
-    transition: transform 0.3s ease, box-shadow 0.4s ease;
-    box-shadow: 0 0 10px rgba(0, 136, 204, 0.5);
-    text-decoration: none;
-    background: transparent;
-  }
+    .error {
+      color: #ff6666;
+      text-align: center;
+      padding: 20px;
+    }
 
-  .telegram-glow-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 25px rgba(0, 136, 204, 0.9), 0 0 60px rgba(0, 136, 204, 0.7);
-  }
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
 
-  .telegram-icon {
-    width: 50px;
-    height: 50px;
-    display: block;
-    color: #fff;
-  }
+      .site-header h1 {
+        font-size: 1.5rem;
+        text-align: left;
+        width: 100%;
+      }
 
-  /* Remove center-wrapper styling so it doesn't interfere */
-  .telegram-center-wrapper {
-    display: block;
-    margin-top: 0;
-  }
-/* Responsive tweaks for tablets and mobiles */
-@media (max-width: 768px) {
-  .site-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
+      .telegram-icon {
+        width: 40px;
+        height: 40px;
+      }
 
-  .site-header h1 {
-    font-size: 1.5rem;
-    text-align: left;
-    width: 100%;
-  }
+      #backButton {
+        width: 100%;
+        font-size: 1rem;
+        padding: 10px;
+        margin-top: 10px;
+      }
 
-  .telegram-icon {
-    width: 40px;
-    height: 40px;
-  }
+      .movie-item,
+      .category-item {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+      }
 
-  #backButton {
-    width: 100%;
-    font-size: 1rem;
-    padding: 10px;
-    margin-top: 10px;
-  }
+      .movie-item img {
+        width: 100%;
+        height: auto;
+      }
 
-  .movie-item,
-  .category-item {
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-  }
+      .pagination {
+        font-size: 0.9rem;
+        flex-wrap: wrap;
+      }
 
-  .movie-item img {
-    width: 100%;
-    height: auto;
-  }
+      .telegram-glow-btn {
+        margin-left: auto;
+      }
+    }
 
-  .pagination {
-    font-size: 0.9rem;
-    flex-wrap: wrap;
-  }
+    @media (max-width: 480px) {
+      body {
+        padding: 20px 10px;
+      }
 
-  .telegram-glow-btn {
-    margin-left: auto;
-  }
-}
+      .site-header {
+        padding: 1rem;
+      }
 
-@media (max-width: 480px) {
-  body {
-    padding: 20px 10px;
-  }
+      .movie-info a {
+        font-size: 0.95rem;
+      }
 
-  .site-header {
-    padding: 1rem;
-  }
-
-  .movie-info a {
-    font-size: 0.95rem;
-  }
-
-  .loading-text {
-    font-size: 12px;
-  }
-}
-
-</style>
-
+      .loading-text {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
 
 
 

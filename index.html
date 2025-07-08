@@ -306,6 +306,15 @@
   <br/>
   <div id="content" class="loading" style="color:#ccc;">Loading...</div>
 
+<!-- Popup -->
+<div id="popup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000000b3; z-index:9999; justify-content:center; align-items:center;">
+  <div style="background:white; padding:20px; border-radius:8px; text-align:center;">
+    <p style="margin-bottom:15px;">Redirecting...</p>
+    <button onclick="confirmRedirect()" style="padding:10px 20px; background:#007BFF; color:white; border:none; border-radius:5px;">OK</button>
+  </div>
+</div>
+
+
 <br/>
 <br/>
 <br/>
@@ -316,14 +325,15 @@
 
   <script>
 const pageHistory = [];
+const baseUrl = "https://isaidub.city";
+let actualDownloadUrl = "";
 
-    const baseUrl = "https://isaidub.city";
-
+// Function to load any page
 async function loadPage(relativePath, isBack = false, retryCount = 3) {
   const container = document.getElementById("content");
 
-  // Store path in history only if not triggered from "Back"
-  if (!isBack && pageHistory.length === 0 || pageHistory[pageHistory.length - 1] !== relativePath) {
+  // History management
+  if (!isBack && (pageHistory.length === 0 || pageHistory[pageHistory.length - 1] !== relativePath)) {
     pageHistory.push(relativePath);
   }
 
@@ -334,14 +344,10 @@ async function loadPage(relativePath, isBack = false, retryCount = 3) {
     </div>
   `;
 
-
-
   const match = relativePath.match(/\/download\/page\/(\d+)\/?$/);
-
-let fullUrl = match
-  ? `https://dubmv.top/download/file/${match[1]}`
-  : "https://isaidub.city" + relativePath;
-
+  let fullUrl = match
+    ? `https://dubmv.top/download/file/${match[1]}`
+    : baseUrl + relativePath;
 
   const apiUrl = "https://api.allorigins.win/get?url=" + encodeURIComponent(fullUrl);
 
@@ -355,7 +361,7 @@ let fullUrl = match
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, "text/html");
 
-      // ✅ Handle final download page
+      // ✅ Final download page
       if (match) {
         const downloadSection = doc.querySelector("div.download");
         let downloadHTML = `<div class="category-item"><strong>Download Links</strong><br><br>`;
@@ -366,8 +372,13 @@ let fullUrl = match
             const text = a.textContent.toLowerCase();
             const href = a.getAttribute("href");
             if (text.includes("watch online") || !href) return;
-            downloadHTML += `<div><a href="${href}" target="_self" style="color:lime" rel="noopener noreferrer">${a.textContent.replace(/isaiDub\.me/gi, "MoviesAroDub")}
-</a></div>`;
+
+            // 👇 Custom link to trigger popup logic
+            downloadHTML += `<div>
+              <a href="#" onclick="handleFinalDownload('${href}'); return false;" style="color:lime">
+                ${a.textContent.replace(/isaiDub\.me/gi, "MoviesAroDub")}
+              </a>
+            </div>`;
           });
         }
 
@@ -376,7 +387,7 @@ let fullUrl = match
         return;
       }
 
-      // ✅ Otherwise: Category or listing page
+      // ✅ Category or list page
       const fDivs = doc.querySelectorAll("div.f");
       let contentHTML = "";
 
@@ -393,8 +404,7 @@ let fullUrl = match
               <img src="https://isaidub.city${img.getAttribute("src")}" alt="${img.getAttribute("alt")}">
               <div class="movie-info">
                 <a href="#" onclick="loadPage('${anchor.getAttribute("href")}'); return false;">
-                 ${anchor.textContent.replace(/isaiDub\.me/gi, "MoviesAroDub")}
-
+                  ${anchor.textContent.replace(/isaiDub\.me/gi, "MoviesAroDub")}
                 </a><br>
                 <small>${size}</small>
               </div>
@@ -442,23 +452,37 @@ let fullUrl = match
     }
   }
 }
+
+// Go back function
 function goBack() {
   if (pageHistory.length > 1) {
-    pageHistory.pop(); // Remove current page
-    const previous = pageHistory.pop(); // Get the one before
-    loadPage(previous, true); // Load it and flag as 'back'
+    pageHistory.pop();
+    const previous = pageHistory.pop();
+    loadPage(previous, true);
   } else {
-    // Redirect to homepage when no history
     window.location.href = 'https://moviesaro.netlify.app';
   }
 }
 
+// ✅ Handle final download click
+function handleFinalDownload(downloadUrl) {
+  actualDownloadUrl = downloadUrl;
+  document.getElementById("popup").style.display = "flex";
+}
 
+// ✅ OK button logic
+function confirmRedirect() {
+  document.getElementById("popup").style.display = "none";
+  window.open("https://otieu.com/4/9535254", "_blank");
+  setTimeout(() => {
+    window.location.href = actualDownloadUrl;
+  }, 5000);
+}
 
-   // Initial load
+// ✅ Initial page load
 loadPage("/tamil-yearly-dubbed-movies/");
-
-  </script>
+</script>
+  
 <script>
     // Disable right-click
 document.addEventListener("contextmenu", function (e) {
